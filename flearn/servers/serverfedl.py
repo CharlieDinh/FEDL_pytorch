@@ -32,7 +32,7 @@ class FEDL(Server):
             print("-------------Round number: ",glob_iter, " -------------")
             #loss_ = 0
             self.send_parameters()
-            self.send_grads()
+            #self.send_grads()
             # Evaluate model each interation
             self.evaluate()
 
