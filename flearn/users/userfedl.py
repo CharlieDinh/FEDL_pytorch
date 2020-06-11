@@ -20,7 +20,7 @@ class UserFEDL(User):
         else:
             self.loss = nn.NLLLoss()
 
-        self.optimizer      = FEDLOptimizer(self.model.parameters(), lr=self.learning_rate, hyper_lr= hyper_learning_rate, L = L)
+        self.optimizer  = FEDLOptimizer(self.model.parameters(), lr=self.learning_rate, hyper_lr= hyper_learning_rate, L = L)
 
     def set_grads(self, new_grads):
         if isinstance(new_grads, nn.Parameter):
@@ -32,6 +32,7 @@ class UserFEDL(User):
 
     def train(self, epochs):
         LOSS = 0
+        self.clone_model_paramenter(self.model.parameters(), self.server_grad)
         self.model.train()
         for epoch in range(1, self.local_epochs + 1):
             self.model.train()
@@ -45,7 +46,8 @@ class UserFEDL(User):
                 self.optimizer.step(self.server_grad, self.pre_local_grad)
                 loss_per_epoch += loss 
             LOSS += loss_per_epoch
-            self.clone_model_paramenter(self.model.parameters(), self.pre_local_grad)
+        
+        self.clone_model_paramenter(self.model.parameters(), self.pre_local_grad)
             #grad = self.optimizer.grad()
         return LOSS
 
