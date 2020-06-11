@@ -6,7 +6,7 @@ from utils.model_utils import Metrics
 import copy
 
 class Server:
-    def __init__(self, dataset,algorithm, model, batch_size, learning_rate ,hyper_learning_rate, lamda,
+    def __init__(self, dataset,algorithm, model, batch_size, learning_rate ,hyper_learning_rate, L,
                  num_glob_iters, local_epochs, optimizer,num_users, times):
 
         # Set up the main attributes
@@ -21,7 +21,7 @@ class Server:
         self.selected_users = []
         self.num_users = num_users
         self.hyper_learning_rate = hyper_learning_rate
-        self.lamda = lamda
+        self.L = L
         self.algorithm = algorithm
         self.rs_train_acc, self.rs_train_loss, self.rs_glob_acc,self.rs_train_acc_per, self.rs_train_loss_per, self.rs_glob_acc_per = [], [], [], [], [], []
         self.times = times
@@ -87,7 +87,7 @@ class Server:
     # Save loss, accurancy to h5 fiel
     def save_results(self):
         alg = self.dataset + "_" + self.algorithm
-        alg = alg + "_" + str(self.learning_rate) + "_" + str(self.hyper_learning_rate) + "_" + str(self.lamda) + "_" + str(self.num_users) + "u" + "_" + str(self.batch_size) + "b" + "_" + str(self.local_epochs)
+        alg = alg + "_" + str(self.learning_rate) + "_" + str(self.hyper_learning_rate) + "_" + str(self.L) + "_" + str(self.num_users) + "u" + "_" + str(self.batch_size) + "b" + "_" + str(self.local_epochs)
         alg = alg + "_" + str(self.times)
         if (len(self.rs_glob_acc) != 0 &  len(self.rs_train_acc) & len(self.rs_train_loss)) :
             with h5py.File("./results/"+'{}.h5'.format(alg, self.local_epochs), 'w') as hf:
@@ -98,7 +98,7 @@ class Server:
         
         # store persionalized value
         alg = self.dataset + "_" + self.algorithm + "_p"
-        alg = alg  + "_" + str(self.learning_rate) + "_" + str(self.hyper_learning_rate) + "_" + str(self.lamda) + "_" + str(self.num_users) + "u" + "_" + str(self.batch_size) + "b"+ "_" + str(self.local_epochs)
+        alg = alg  + "_" + str(self.learning_rate) + "_" + str(self.hyper_learning_rate) + "_" + str(self.L) + "_" + str(self.num_users) + "u" + "_" + str(self.batch_size) + "b"+ "_" + str(self.local_epochs)
         alg = alg + "_" + str(self.times)
         if (len(self.rs_glob_acc_per) != 0 &  len(self.rs_train_acc_per) & len(self.rs_train_loss_per)) :
             with h5py.File("./results/"+'{}.h5'.format(alg, self.local_epochs), 'w') as hf:

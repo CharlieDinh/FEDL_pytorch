@@ -10,9 +10,9 @@ import copy
 # Implementation for FedAvg clients
 
 class UserFEDL(User):
-    def __init__(self, numeric_id, train_data, test_data, model, batch_size, learning_rate, hyper_learning_rate, lamda,
+    def __init__(self, numeric_id, train_data, test_data, model, batch_size, learning_rate, hyper_learning_rate, L,
                  local_epochs, optimizer):
-        super().__init__(numeric_id, train_data, test_data, model[0], batch_size, learning_rate, hyper_learning_rate, lamda,
+        super().__init__(numeric_id, train_data, test_data, model[0], batch_size, learning_rate, hyper_learning_rate, L,
                          local_epochs)
 
         if(model[1] == "linear_regression"):
@@ -20,7 +20,7 @@ class UserFEDL(User):
         else:
             self.loss = nn.NLLLoss()
 
-        self.optimizer      = FEDLOptimizer(self.model.parameters(), lr=self.learning_rate)
+        self.optimizer      = FEDLOptimizer(self.model.parameters(), lr=self.learning_rate, hyper_lr= hyper_learning_rate, L = L)
 
     def set_grads(self, new_grads):
         if isinstance(new_grads, nn.Parameter):

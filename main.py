@@ -13,7 +13,7 @@ from utils.plot_utils import *
 import torch
 torch.manual_seed(0)
 
-def main(dataset, algorithm, model, batch_size, learning_rate, hyper_learning_rate, lamda, num_glob_iters,
+def main(dataset, algorithm, model, batch_size, learning_rate, hyper_learning_rate, L, num_glob_iters,
          local_epochs, optimizer, numusers, times):
 
     for i in range(times):
@@ -30,15 +30,15 @@ def main(dataset, algorithm, model, batch_size, learning_rate, hyper_learning_ra
             model = Linear_Regression(60,1), model
         # select algorithm
         if(algorithm == "FedAvg"):
-            server = FedAvg(dataset, algorithm, model, batch_size, learning_rate, hyper_learning_rate, lamda, num_glob_iters, local_epochs, optimizer, numusers, i)
+            server = FedAvg(dataset, algorithm, model, batch_size, learning_rate, hyper_learning_rate, L, num_glob_iters, local_epochs, optimizer, numusers, i)
         
         if(algorithm == "FEDL"):
-            server = FEDL(dataset, algorithm, model, batch_size, learning_rate, hyper_learning_rate, lamda, num_glob_iters, local_epochs, optimizer, numusers, i)
+            server = FEDL(dataset, algorithm, model, batch_size, learning_rate, hyper_learning_rate, L, num_glob_iters, local_epochs, optimizer, numusers, i)
         server.train()
         server.test()
 
     # Average data 
-    average_data(num_users=numusers, loc_ep1=local_epochs, Numb_Glob_Iters=num_glob_iters, lamb=lamda,learning_rate=learning_rate, hyper_learning_rate = hyper_learning_rate, algorithms=algorithm, batch_size=batch_size, dataset=dataset, k = K, personal_learning_rate = personal_learning_rate,times = times)
+    average_data(num_users=numusers, loc_ep1=local_epochs, Numb_Glob_Iters=num_glob_iters, lamb=L,learning_rate=learning_rate, hyper_learning_rate = hyper_learning_rate, algorithms=algorithm, batch_size=batch_size, dataset=dataset, k = K, personal_learning_rate = personal_learning_rate,times = times)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     parser.add_argument("--batch_size", type=int, default=20)
     parser.add_argument("--learning_rate", type=float, default=0.005, help="Local learning rate")
     parser.add_argument("--hyper_learning_rate", type=float, default=0.1, help=" Learning rate of FEDL")
-    parser.add_argument("--lamda", type=int, default=15, help="Regularization term")
+    parser.add_argument("--L", type=int, default=15, help="Regularization term")
     parser.add_argument("--num_global_iters", type=int, default=800)
     parser.add_argument("--local_epochs", type=int, default=20)
     parser.add_argument("--optimizer", type=str, default="SGD")
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         batch_size=args.batch_size,
         learning_rate=args.learning_rate,
         hyper_learning_rate = args.hyper_learning_rate, 
-        lamda = args.lamda,
+        L = args.L,
         num_glob_iters=args.num_global_iters,
         local_epochs=args.local_epochs,
         optimizer= args.optimizer,
