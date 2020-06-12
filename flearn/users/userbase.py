@@ -40,6 +40,12 @@ class User:
             old_param.data = new_param.data.clone()
             local_param.data = new_param.data.clone()
             if(new_param.grad != None):
+                if(old_param.grad == None):
+                    old_param.grad = torch.zeros_like(new_param.grad)
+
+                if(local_param.grad == None):
+                    local_param.grad = torch.zeros_like(new_param.grad)
+
                 old_param.grad.data = new_param.grad.data.clone()
                 local_param.grad.data = new_param.grad.data.clone()
         #self.local_weight_updated = copy.deepcopy(self.optimizer.param_groups[0]['params'])

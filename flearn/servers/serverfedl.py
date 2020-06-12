@@ -40,7 +40,7 @@ class FEDL(Server):
             for user in self.selected_users:
                 user.train(self.local_epochs) #* user.train_samples
             self.aggregate_parameters()
-            self.aggregate_grads()
+            #self.aggregate_grads()
             #loss_ /= self.total_train_samples
             #loss.append(loss_)
             #print(loss_)

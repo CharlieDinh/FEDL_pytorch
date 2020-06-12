@@ -23,7 +23,7 @@ class Server:
         self.hyper_learning_rate = hyper_learning_rate
         self.L = L
         self.algorithm = algorithm
-        self.rs_train_acc, self.rs_train_loss, self.rs_glob_acc,self.rs_train_acc_per, self.rs_train_loss_per, self.rs_glob_acc_per = [], [], [], [], [], []
+        self.rs_train_acc, self.rs_train_loss, self.rs_glob_acc= [], [], []
         self.times = times
         
     def aggregate_grads(self):
@@ -32,11 +32,6 @@ class Server:
             param.grad = torch.zeros_like(param.data)
         for user in self.users:
             self.add_grad(user, user.train_samples / self.total_train_samples)
-
-    #def add_grad(self, user, ratio):
-    ##    user_grad = user.get_grads()
-    #    for idx, param in enumerate(self.model.parameters()):
-    #        param.grad.data = param.grad.data + user_grad[idx].clone() * ratio
     
     def send_parameters(self):
         assert (self.users is not None and len(self.users) > 0)
@@ -47,13 +42,17 @@ class Server:
         model = self.model.parameters()
         for server_param, user_param in zip(self.model.parameters(), user.get_parameters()):
             server_param.data = server_param.data + user_param.data.clone() * ratio
-            server_param.grad.data = server_param.grad.data + user_param.grad.data.clone() * ratio
+            if(user_param.grad != None):
+                if(server_param.grad == None):
+                    server_param.grad = torch.zeros_like(user_param.grad)
+                server_param.grad.data = server_param.grad.data + user_param.grad.data.clone() * ratio
 
     def aggregate_parameters(self):
         assert (self.users is not None and len(self.users) > 0)
         for param in self.model.parameters():
             param.data = torch.zeros_like(param.data)
-            param.grad.data = torch.zeros_like(param.grad.data)
+            if(param.grad != None):
+                param.grad.data = torch.zeros_like(param.grad.data)
         total_train = 0
         #if(self.num_users = self.to)
         for user in self.selected_users:
@@ -97,17 +96,6 @@ class Server:
                 hf.create_dataset('rs_glob_acc', data=self.rs_glob_acc)
                 hf.create_dataset('rs_train_acc', data=self.rs_train_acc)
                 hf.create_dataset('rs_train_loss', data=self.rs_train_loss)
-                hf.close()
-        
-        # store persionalized value
-        alg = self.dataset + "_" + self.algorithm + "_p"
-        alg = alg  + "_" + str(self.learning_rate) + "_" + str(self.hyper_learning_rate) + "_" + str(self.L) + "_" + str(self.num_users) + "u" + "_" + str(self.batch_size) + "b"+ "_" + str(self.local_epochs)
-        alg = alg + "_" + str(self.times)
-        if (len(self.rs_glob_acc_per) != 0 &  len(self.rs_train_acc_per) & len(self.rs_train_loss_per)) :
-            with h5py.File("./results/"+'{}.h5'.format(alg, self.local_epochs), 'w') as hf:
-                hf.create_dataset('rs_glob_acc', data=self.rs_glob_acc_per)
-                hf.create_dataset('rs_train_acc', data=self.rs_train_acc_per)
-                hf.create_dataset('rs_train_loss', data=self.rs_train_loss_per)
                 hf.close()
 
     def test(self):
