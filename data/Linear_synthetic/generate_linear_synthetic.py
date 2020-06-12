@@ -11,10 +11,10 @@ import math
 NUM_USER = 100
 def normalize_data(X):
     
-    #nomarlize all feature of data between (-1 and 1)
+    #nomarlize all feature of data between (0 and 1)
     normX = X - X.min()
     normX = normX / (X.max() - X.min())
-    normX = normX*2-1
+    #normX = normX*2-1 between (-1 and 1)
 
     # nomarlize data with respect to -1 < X.X^T < 1.
     temp = normX.dot(normX.T)

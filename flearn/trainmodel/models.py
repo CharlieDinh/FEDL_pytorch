@@ -70,6 +70,6 @@ class Linear_Regression(nn.Module):
         self.linear = torch.nn.Linear(input_dim, output_dim)
 
     def forward(self, x):
-        #x = torch.flatten(x, 1)
+        x = torch.flatten(x, 1)
         outputs = self.linear(x)
         return outputs

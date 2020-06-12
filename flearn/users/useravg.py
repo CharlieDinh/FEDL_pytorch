@@ -31,22 +31,22 @@ class UserAVG(User):
 
 
     def train(self, epochs):
-        LOSS = 0
         self.model.train()
         for epoch in range(1, self.local_epochs + 1):
             self.model.train()
-            loss_per_epoch = 0
+            #loss_per_epoch = 0
             for batch_idx, (X, y) in enumerate(self.trainloader):
                 X, y = self.get_next_train_batch()
                 self.optimizer.zero_grad()
                 output = self.model(X)
                 loss = self.loss(output, y)
+                #print(output.size(),y.size())
                 loss.backward()
                 self.optimizer.step()
-                loss_per_epoch += loss 
-            LOSS += loss_per_epoch
+                #loss_per_epoch += loss 
+            #LOSS += loss_per_epoch
             self.clone_model_paramenter(self.model.parameters(), self.local_model)
-        return LOSS
+        return loss
 
     # def train(self, epochs):
     #     LOSS = 0
