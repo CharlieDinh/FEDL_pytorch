@@ -33,11 +33,11 @@ class Server:
         for user in self.users:
             self.add_grad(user, user.train_samples / self.total_train_samples)
 
-    def add_grad(self, user, ratio):
-        user_grad = user.get_grads()
-        for idx, param in enumerate(self.model.parameters()):
-            param.grad = param.grad + user_grad[idx].clone() * ratio
-
+    #def add_grad(self, user, ratio):
+    ##    user_grad = user.get_grads()
+    #    for idx, param in enumerate(self.model.parameters()):
+    #        param.grad.data = param.grad.data + user_grad[idx].clone() * ratio
+    
     def send_parameters(self):
         assert (self.users is not None and len(self.users) > 0)
         for user in self.users:
@@ -47,17 +47,20 @@ class Server:
         model = self.model.parameters()
         for server_param, user_param in zip(self.model.parameters(), user.get_parameters()):
             server_param.data = server_param.data + user_param.data.clone() * ratio
+            server_param.grad.data = server_param.grad.data + user_param.grad.data.clone() * ratio
 
     def aggregate_parameters(self):
         assert (self.users is not None and len(self.users) > 0)
         for param in self.model.parameters():
             param.data = torch.zeros_like(param.data)
+            param.grad.data = torch.zeros_like(param.grad.data)
         total_train = 0
         #if(self.num_users = self.to)
         for user in self.selected_users:
             total_train += user.train_samples
         for user in self.selected_users:
             self.add_parameters(user, user.train_samples / total_train)
+            #self.add_grad(user, user.train_samples / total_train)
 
     def save_model(self):
         model_path = os.path.join("models", self.dataset)

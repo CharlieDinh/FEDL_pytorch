@@ -5,7 +5,7 @@ import os
 import json
 from torch.utils.data import DataLoader
 from flearn.users.userbase import User
-from flearn.optimizers.fedoptimizer import FEDLOptimizer
+from flearn.optimizers.fedoptimizer import *
 import copy
 # Implementation for FedAvg clients
 
@@ -31,7 +31,6 @@ class UserFEDL(User):
                 model_grad.data = new_grads[idx]
 
     def train(self, epochs):
-        LOSS = 0
         self.clone_model_paramenter(self.model.parameters(), self.server_grad)
         self.model.train()
         for epoch in range(1, self.local_epochs + 1):
@@ -44,10 +43,7 @@ class UserFEDL(User):
                 loss = self.loss(output, y)
                 loss.backward()
                 self.optimizer.step(self.server_grad, self.pre_local_grad)
-                loss_per_epoch += loss 
-            LOSS += loss_per_epoch
-        
         self.clone_model_paramenter(self.model.parameters(), self.pre_local_grad)
             #grad = self.optimizer.grad()
-        return LOSS
+        return loss
 
