@@ -32,7 +32,7 @@ class UserFEDL(User):
 
     def train(self, epochs):
         self.clone_model_paramenter(self.model.parameters(), self.server_grad)
-        self.pre_local_grad = self.get_grads()
+        self.get_grads(self.pre_local_grad)
         self.model.train()
         for epoch in range(1, self.local_epochs + 1):
             self.model.train()

@@ -27,23 +27,16 @@ class FEDL(Server):
         print("Finished creating FedAvg server.")
 
     def train(self):
-        loss = []
+        
         for glob_iter in range(self.num_glob_iters):
             print("-------------Round number: ",glob_iter, " -------------")
-            #loss_ = 0
-            self.send_parameters()
-            #self.send_grads()
-            # Evaluate model each interation
-            self.evaluate()
 
+            self.send_parameters()
+            self.evaluate()
             self.selected_users = self.select_users(glob_iter,self.num_users)
             for user in self.selected_users:
                 user.train(self.local_epochs) #* user.train_samples
             self.aggregate_parameters()
-            #self.aggregate_grads()
-            #loss_ /= self.total_train_samples
-            #loss.append(loss_)
-            #print(loss_)
-        #print(loss)
+
         self.save_results()
         self.save_model()

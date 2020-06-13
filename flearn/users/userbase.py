@@ -35,7 +35,6 @@ class User:
         self.pre_local_grad = copy.deepcopy(list(self.model.parameters()))
 
     def set_parameters(self, model):
-
         for old_param, new_param, local_param in zip(self.model.parameters(), model.parameters(), self.local_model):
             old_param.data = new_param.data.clone()
             local_param.data = new_param.data.clone()
@@ -73,7 +72,7 @@ class User:
             param.data = new_param.data.clone()
             param.grad.data = new_param.grad.data.clone()
 
-    def get_grads(self):
+    def get_grads(self, grads):
         # grads = []
         # for param in self.model.parameters():
         #     if param.grad is None:
@@ -81,14 +80,16 @@ class User:
         #     else:
         #         grads.append(param.grad.data)
         # return grads
-        grads = []
         self.optimizer.zero_grad()
         for x, y in self.trainloaderfull:
             output = self.model(x)
             loss = self.loss(output, y)
             loss.backward()
-        for param in self.model.parameters():
-            grads.append(param.grad.data)
+        self.clone_model_paramenter(self.model.parameters(), grads)
+        #for param, grad in zip(self.model.parameters(), grads):
+        #    if(grad.grad == None):
+        #        grad.grad = torch.zeros_like(param.grad)
+        #    grad.grad.data = param.grad.data.clone()
         return grads
 
     def test(self):
