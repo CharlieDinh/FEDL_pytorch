@@ -52,7 +52,7 @@ def get_data_label_style(input_data = [], linestyles= [], algs_lbl = [], lamb = 
 
     return data, lstyles, labels
 
-def average_data(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb="", learning_rate="", hyper_learning_rate="", algorithms="", batch_size=0, dataset = "", k = "", personal_learning_rate = "", times = 5):
+def average_data(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb="", learning_rate="", hyper_learning_rate="", algorithms="", batch_size=0, dataset = "", times = 5):
     glob_acc, train_acc, train_loss = get_all_training_data_value( num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, hyper_learning_rate, algorithms, batch_size, dataset, k, personal_learning_rate,times)
     glob_acc_data = np.average(glob_acc, axis=0)
     train_acc_data = np.average(train_acc, axis=0)
@@ -67,8 +67,6 @@ def average_data(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb="", learning
 
     alg = dataset + "_" + algorithms
     alg = alg + "_" + str(learning_rate) + "_" + str(hyper_learning_rate) + "_" + str(lamb) + "_" + str(num_users) + "u" + "_" + str(batch_size) + "b" + "_" + str(loc_ep1)
-    if(algorithms == "pFedMe" or algorithms == "pFedMe_p"):
-        alg = alg + "_" + str(k) + "_" + str(personal_learning_rate)
     alg = alg + "_" + "avg"
     if (len(glob_acc) != 0 &  len(train_acc) & len(train_loss)) :
         with h5py.File("./results/"+'{}.h5'.format(alg,loc_ep1), 'w') as hf:

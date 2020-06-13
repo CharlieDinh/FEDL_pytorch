@@ -58,8 +58,11 @@ class User:
     def clone_model_paramenter(self, param, clone_param):
         for param, clone_param in zip(param, clone_param):
             clone_param.data = param.data.clone()
-            if(clone_param.grad != None):
+            if(param.grad != None):
+                if(clone_param.grad == None):
+                    clone_param.grad = torch.zeros_like(param.grad)
                 clone_param.grad.data = param.grad.data.clone()
+                
         return clone_param
     
     def get_updated_parameters(self):
@@ -71,12 +74,21 @@ class User:
             param.grad.data = new_param.grad.data.clone()
 
     def get_grads(self):
+        # grads = []
+        # for param in self.model.parameters():
+        #     if param.grad is None:
+        #         grads.append(torch.zeros_like(param.data))
+        #     else:
+        #         grads.append(param.grad.data)
+        # return grads
         grads = []
+        self.optimizer.zero_grad()
+        for x, y in self.trainloaderfull:
+            output = self.model(x)
+            loss = self.loss(output, y)
+            loss.backward()
         for param in self.model.parameters():
-            if param.grad is None:
-                grads.append(torch.zeros_like(param.data))
-            else:
-                grads.append(param.grad.data)
+            grads.append(param.grad.data)
         return grads
 
     def test(self):

@@ -32,6 +32,7 @@ class UserFEDL(User):
 
     def train(self, epochs):
         self.clone_model_paramenter(self.model.parameters(), self.server_grad)
+        self.pre_local_grad = self.get_grads()
         self.model.train()
         for epoch in range(1, self.local_epochs + 1):
             self.model.train()
@@ -43,7 +44,7 @@ class UserFEDL(User):
                 loss = self.loss(output, y)
                 loss.backward()
                 self.optimizer.step(self.server_grad, self.pre_local_grad)
-        self.clone_model_paramenter(self.model.parameters(), self.pre_local_grad)
+        #self.clone_model_paramenter(self.model.parameters(), self.pre_local_grad)
             #grad = self.optimizer.grad()
         return loss
 
