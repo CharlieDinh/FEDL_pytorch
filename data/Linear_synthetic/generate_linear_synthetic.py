@@ -20,23 +20,22 @@ def normalize_data(X):
     temp = normX.dot(normX.T)
     return normX/np.sqrt(temp.max())
 
-def generate_synthetic(alpha = 0.5, hyper_learning_rate = 0.5, iid = 0):
+def generate_synthetic(alpha = 0.5, beta = 0.5):
 
     # Generate parameters for controlling kappa 
     dimension = 60
     NUM_CLASS = 1
-    samples_per_user = np.random.lognormal(4, 2, (NUM_USER)).astype(int) + 50
+    samples_per_user = np.random.lognormal(4, 2, (NUM_USER)).astype(int) + 100
     print(samples_per_user)
     num_samples = np.sum(samples_per_user)
 
     X_split = [[] for _ in range(NUM_USER)]
     y_split = [[] for _ in range(NUM_USER)]
 
-
     #### define some eprior ####
     mean_W = np.random.normal(0, alpha, NUM_USER)
     mean_b = mean_W
-    B = np.random.normal(0, hyper_learning_rate, NUM_USER)
+    B = np.random.normal(0, beta, NUM_USER)
     mean_x = np.zeros((NUM_USER, dimension))
 
     diagonal = np.zeros(dimension)
@@ -45,24 +44,13 @@ def generate_synthetic(alpha = 0.5, hyper_learning_rate = 0.5, iid = 0):
     cov_x = np.diag(diagonal)
 
     for i in range(NUM_USER):
-        if iid == 1:
-            mean_x[i] = np.ones(dimension) * B[i]  # all zeros
-        else:
-            mean_x[i] = np.random.normal(B[i], 1, dimension)
+        mean_x[i] = np.random.normal(B[i], 1, dimension)
         print(mean_x[i])
-
-    if iid == 1:
-        W_global = np.random.normal(0, 1, (dimension, NUM_CLASS))
-        b_global = np.random.normal(0, 1,  NUM_CLASS)
 
     for i in range(NUM_USER):
 
         W = np.random.normal(mean_W[i], 1, (dimension, NUM_CLASS))
         b = np.random.normal(mean_b[i], 1,  NUM_CLASS)
-
-        if iid == 1:
-            W = W_global
-            b = b_global
 
         xx = np.random.multivariate_normal(mean_x[i], cov_x, samples_per_user[i])
         nom_xx = normalize_data(xx)
@@ -76,7 +64,6 @@ def generate_synthetic(alpha = 0.5, hyper_learning_rate = 0.5, iid = 0):
 
         print("{}-th users has {} exampls".format(i, len(y_split[i])))
 
-
     return X_split, y_split
 
 
@@ -89,7 +76,7 @@ def main():
     train_path = "data/train/mytrain.json"
     test_path = "data/test/mytest.json"
 
-    X, y = generate_synthetic(alpha=0.5, hyper_learning_rate=0.5, iid=0) # synthetic (0.5, 0.5)
+    X, y = generate_synthetic(alpha=0.5, beta=0.5) # synthetic (0.5, 0.5)
 
 
     # Create data structure
@@ -103,7 +90,7 @@ def main():
         random.shuffle(combined)
         X[i][:], y[i][:] = zip(*combined)
         num_samples = len(X[i])
-        train_len = int(0.9 * num_samples)
+        train_len = int(0.75 * num_samples)
         test_len = num_samples - train_len
         
         train_data['users'].append(uname) 

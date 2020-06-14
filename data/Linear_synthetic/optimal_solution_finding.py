@@ -9,6 +9,7 @@ import math
 import numpy as np
 from sklearn.linear_model import LinearRegression
 import sklearn as sk
+np.random.seed(0)
 
 NUM_USER = 100
 
@@ -17,7 +18,6 @@ def normalize_data(X):
     #nomarlize all feature of data between (-1 and 1)
     normX = X - X.min()
     normX = normX / (X.max() - X.min())
-    normX = normX*2-1
 
     # nomarlize data with respect to -1 < X.X^T < 1.
     temp = normX.dot(normX.T)
@@ -29,7 +29,7 @@ def finding_optimal_synthetic(alpha = 0.5, hyper_learning_rate = 0.5, iid = 0):
     # Generate parameters for controlling kappa 
     dimension = 60
     NUM_CLASS = 1
-    samples_per_user = np.random.lognormal(4, 2, (NUM_USER)).astype(int) + 50
+    samples_per_user = np.random.lognormal(4, 2, (NUM_USER)).astype(int) + 100
     print(samples_per_user)
     num_samples = np.sum(samples_per_user)
 
@@ -45,10 +45,7 @@ def finding_optimal_synthetic(alpha = 0.5, hyper_learning_rate = 0.5, iid = 0):
     cov_x = np.diag(diagonal)
 
     for i in range(NUM_USER):
-        if iid == 1:
-            mean_x[i] = np.ones(dimension) * B[i]  # all zeros
-        else:
-            mean_x[i] = np.random.normal(B[i], 1, dimension)
+        mean_x[i] = np.random.normal(B[i], 1, dimension)
 
     data_all_x = []
     data_all_y = []
@@ -57,10 +54,6 @@ def finding_optimal_synthetic(alpha = 0.5, hyper_learning_rate = 0.5, iid = 0):
 
         W = np.random.normal(mean_W[i], 1, (dimension, NUM_CLASS))
         b = np.random.normal(mean_b[i], 1,  NUM_CLASS)
-
-        if iid == 1:
-            W = W_global
-            b = b_global
 
         xx = np.random.multivariate_normal(mean_x[i], cov_x, samples_per_user[i])
         nom_xx = normalize_data(xx)
@@ -79,12 +72,14 @@ def finding_optimal_synthetic(alpha = 0.5, hyper_learning_rate = 0.5, iid = 0):
     model.fit(data_all_x, data_all_y)
     out = model.predict(data_all_x)
     LOSS = sk.metrics.mean_squared_error(out,data_all_y)
-    return LOSS 
+    return LOSS , model.coef_, model.intercept_
 
 def main():
     loss = 0
-    loss = finding_optimal_synthetic(alpha=0.5, hyper_learning_rate=0.5)
+    loss, w, b = finding_optimal_synthetic(alpha=0.5, hyper_learning_rate=0.5)
     print("loss for all data", loss)
+    print("w",w)
+    print("b",b)
 
 if __name__ == "__main__":
     main()
