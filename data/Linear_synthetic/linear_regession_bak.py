@@ -122,8 +122,8 @@ def save_total_data():
 
 
 def main():
-    generate_x()
-    #save_total_data()
+    #generate_x()
+    save_total_data()
 
 
 if __name__ == '__main__':

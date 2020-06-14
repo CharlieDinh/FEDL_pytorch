@@ -14,7 +14,7 @@ def simple_read_data(alg):
     rs_train_loss = np.array(hf.get('rs_train_loss')[:])
     return rs_train_acc, rs_train_loss, rs_glob_acc
 
-def get_training_data_value(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=[], learning_rate=[],hyper_learning_rate=[],algorithms_list=[], batch_size=[], dataset="", k= [] , personal_learning_rate = []):
+def get_training_data_value(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=[], learning_rate=[],hyper_learning_rate=[],algorithms_list=[], batch_size=[], dataset=""):
     Numb_Algs = len(algorithms_list)
     train_acc = np.zeros((Numb_Algs, Numb_Glob_Iters))
     train_loss = np.zeros((Numb_Algs, Numb_Glob_Iters))
@@ -29,7 +29,7 @@ def get_training_data_value(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=[
         algs_lbl[i] = algs_lbl[i]
     return glob_acc, train_acc, train_loss
 
-def get_all_training_data_value(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=0, learning_rate=0,hyper_learning_rate=0,algorithms="", batch_size=0, dataset="", k= 0 , personal_learning_rate =0 ,times = 5):
+def get_all_training_data_value(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=0, learning_rate=0,hyper_learning_rate=0,algorithms="", batch_size=0, dataset="" ,times = 5):
     train_acc = np.zeros((times, Numb_Glob_Iters))
     train_loss = np.zeros((times, Numb_Glob_Iters))
     glob_acc = np.zeros((times, Numb_Glob_Iters))
@@ -53,7 +53,7 @@ def get_data_label_style(input_data = [], linestyles= [], algs_lbl = [], lamb = 
     return data, lstyles, labels
 
 def average_data(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb="", learning_rate="", hyper_learning_rate="", algorithms="", batch_size=0, dataset = "", times = 5):
-    glob_acc, train_acc, train_loss = get_all_training_data_value( num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, hyper_learning_rate, algorithms, batch_size, dataset, k, personal_learning_rate,times)
+    glob_acc, train_acc, train_loss = get_all_training_data_value( num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, hyper_learning_rate, algorithms, batch_size, dataset,times)
     glob_acc_data = np.average(glob_acc, axis=0)
     train_acc_data = np.average(train_acc, axis=0)
     train_loss_data = np.average(train_loss, axis=0)
@@ -75,16 +75,17 @@ def average_data(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb="", learning
             hf.create_dataset('rs_train_loss', data=train_loss_data)
             hf.close()
 
-def plot_summary_one_figure(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=[], learning_rate=[], hyper_learning_rate=[], algorithms_list=[], batch_size=0, dataset = "", k = [], personal_learning_rate = []):
+def plot_summary_one_figure(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=[], learning_rate=[], hyper_learning_rate=[], algorithms_list=[], batch_size=0, dataset = ""):
     Numb_Algs = len(algorithms_list)
     dataset = dataset
-    glob_acc_, train_acc_, train_loss_ = get_training_data_value( num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, hyper_learning_rate, algorithms_list, batch_size, dataset, k, personal_learning_rate )
+    #glob_acc_, train_acc_, train_loss_ = get_training_data_value( num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, hyper_learning_rate, algorithms_list, batch_size, dataset)
     
-    glob_acc =  average_smooth(glob_acc_, window='flat')
-    train_loss = average_smooth(train_loss_, window='flat')
-    train_acc = average_smooth(train_acc_, window='flat')
+    #glob_acc =  average_smooth(glob_acc_, window='flat')
+    ##train_loss = average_smooth(train_loss_, window='flat')
+    #train_acc = average_smooth(train_acc_, window='flat')
 
-    #glob_acc, train_acc, train_loss = get_training_data_value( num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, hyper_learning_rate, algorithms_list, batch_size, dataset, k, personal_learning_rate )
+    glob_acc, train_acc, train_loss = get_training_data_value( num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, hyper_learning_rate, algorithms_list, batch_size, dataset)
+
     print("max value of test accurancy",glob_acc.max())
     plt.figure(1,figsize=(5, 5))
     MIN = train_loss.min() - 0.001

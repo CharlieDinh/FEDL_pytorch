@@ -37,7 +37,7 @@ class FEDLOptimizer(Optimizer):
             loss = closure
         for group in self.param_groups:
             for p, server_grad, pre_grad in zip(group['params'],server_grads, pre_grads):
-                if(server_grad.grad != None):
+                if(server_grad.grad != None and pre_grad.grad != None):
                     p.data = p.data - group['lr'] * (p.grad.data + group['hyper_lr'] * server_grad.grad.data - pre_grad.grad.data)
                 else:
                      p.data = p.data - group['lr'] * p.grad.data

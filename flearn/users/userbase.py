@@ -73,14 +73,9 @@ class User:
             param.grad.data = new_param.grad.data.clone()
 
     def get_grads(self, grads):
-        # grads = []
-        # for param in self.model.parameters():
-        #     if param.grad is None:
-        #         grads.append(torch.zeros_like(param.data))
-        #     else:
-        #         grads.append(param.grad.data)
-        # return grads
+
         self.optimizer.zero_grad()
+        
         for x, y in self.trainloaderfull:
             output = self.model(x)
             loss = self.loss(output, y)
