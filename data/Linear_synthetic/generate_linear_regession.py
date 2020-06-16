@@ -52,9 +52,6 @@ def generate_linear_data(num_users=100, kappa=10, dim=40, noise_ratio=0.05):
     norm = np.sqrt(np.linalg.norm(X_total.T.dot(X_total), 2) / num_total_samples)
     X_total /= norm
 
-    covarient_matrix = np.cov(X_total)
-    print("Covarient matrix:",covarient_matrix)
-
     # Generate weights and labels
     W = np.random.rand(dim)
     y_total = X_total.dot(W)
