@@ -24,59 +24,52 @@ def normalize_data(X):
     return normX/np.sqrt(temp.max())
 
 
-def finding_optimal_synthetic(alpha = 0.5, hyper_learning_rate = 0.5, iid = 0):
+def finding_optimal_synthetic(num_users=100, kappa=10, dim = 40, noise_ratio=0.05):
+    
+    powers = - np.log(kappa) / np.log(dim) / 2
+    DIM = np.arange(dim)
+    S = np.power(DIM+1, powers)
 
-    # Generate parameters for controlling kappa 
-    dimension = 60
-    NUM_CLASS = 1
-    samples_per_user = np.random.lognormal(4, 2, (NUM_USER)).astype(int) + 100
-    print(samples_per_user)
-    num_samples = np.sum(samples_per_user)
+    # Creat list data for all users 
+    X_split = [[] for _ in range(num_users)]  # X for each user
+    y_split = [[] for _ in range(num_users)]  # y for each user
+    samples_per_user = np.random.lognormal(4, 2, num_users).astype(int) + 500
+    indices_per_user = np.insert(samples_per_user.cumsum(), 0, 0, 0)
+    num_total_samples = indices_per_user[-1]
 
-    #### define some eprior ####
-    mean_W = np.random.normal(0, alpha, NUM_USER)
-    mean_b = mean_W
-    B = np.random.normal(0, hyper_learning_rate, NUM_USER)
-    mean_x = np.zeros((NUM_USER, dimension))
+    # Create mean of data for each user, each user will have different distribution
+    mean_X = np.array([np.random.randn(dim) for _ in range(num_users)])
 
-    diagonal = np.zeros(dimension)
-    for j in range(dimension):
-        diagonal[j] = np.power((j+1), -1.2)
-    cov_x = np.diag(diagonal)
+    # Covariance matrix for X
+    X_total = np.zeros((num_total_samples, dim))
+    y_total = np.zeros(num_total_samples)
 
-    for i in range(NUM_USER):
-        mean_x[i] = np.random.normal(B[i], 1, dimension)
+    for n in range(num_users):
+        # Generate data
+        X_n = np.random.multivariate_normal(mean_X[n], np.diag(S), samples_per_user[n])
+        X_total[indices_per_user[n]:indices_per_user[n+1], :] = X_n
 
-    data_all_x = []
-    data_all_y = []
+    # Normalize all X's using LAMBDA
+    norm = np.sqrt(np.linalg.norm(X_total.T.dot(X_total), 2) / num_total_samples)
+    X_total /= norm
 
-    for i in range(NUM_USER):
-
-        W = np.random.normal(mean_W[i], 1, (dimension, NUM_CLASS))
-        b = np.random.normal(mean_b[i], 1,  NUM_CLASS)
-
-        xx = np.random.multivariate_normal(mean_x[i], cov_x, samples_per_user[i])
-        nom_xx = normalize_data(xx)
-        
-        yy = np.zeros(samples_per_user[i])
-
-        for j in range(samples_per_user[i]):
-            yy[j] = np.dot(nom_xx[j], W) + b
-
-        data_all_x.extend(nom_xx)
-        data_all_y.extend(yy)
+    # Generate weights and labels
+    W = np.random.rand(dim)
+    y_total = X_total.dot(W)
+    noise_variance = 0.01
+    y_total = y_total + np.sqrt(noise_ratio) * np.random.randn(num_total_samples)
 
 
     # finding optimal
     model = LinearRegression()
-    model.fit(data_all_x, data_all_y)
-    out = model.predict(data_all_x)
-    LOSS = sk.metrics.mean_squared_error(out,data_all_y)
+    model.fit(X_total, y_total)
+    out = model.predict(X_total)
+    LOSS = sk.metrics.mean_squared_error(out,y_total)
     return LOSS , model.coef_, model.intercept_
 
 def main():
     loss = 0
-    loss, w, b = finding_optimal_synthetic(alpha=0.5, hyper_learning_rate=0.5)
+    loss, w, b = finding_optimal_synthetic()
     print("loss for all data", loss)
     print("w",w)
     print("b",b)

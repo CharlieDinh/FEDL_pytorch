@@ -4,7 +4,7 @@ import json
 import random
 import os
 np.random.seed(0)
-
+from numpy import linalg as LA
 
 def generate_x(n_samples = 100, dim= 40, kappa= 10):
     '''Helper function to generate data''' 
@@ -13,7 +13,10 @@ def generate_x(n_samples = 100, dim= 40, kappa= 10):
 
     S = np.power(np.arange(dim)+1, powers)
     X = np.random.randn(n_samples, dim) # Random standard Gaussian data
-    X *= S                              # Conditioning
+    X *= S
+    covarient_matrix = np.cov(X)
+    print("Covarient matrix:",covarient_matrix)                            # Conditioning
+    print("np.diag(S)", np.diag(S))
     return X, 1, 1/kappa, np.diag(S)
 
 def generate_linear_data(num_users=100, kappa=10, dim=40, noise_ratio=0.05):
@@ -22,6 +25,8 @@ def generate_linear_data(num_users=100, kappa=10, dim=40, noise_ratio=0.05):
     # generate power S
     powers = - np.log(kappa) / np.log(dim) / 2
     DIM = np.arange(dim)
+
+    # Covariance matrix for X
     S = np.power(DIM+1, powers)
 
     # Creat list data for all users 
@@ -34,20 +39,21 @@ def generate_linear_data(num_users=100, kappa=10, dim=40, noise_ratio=0.05):
     # Create mean of data for each user, each user will have different distribution
     mean_X = np.array([np.random.randn(dim) for _ in range(num_users)])
 
-    # Covariance matrix for X
-    Sigma = np.eye(dim)
+
     X_total = np.zeros((num_total_samples, dim))
     y_total = np.zeros(num_total_samples)
 
     for n in range(num_users):
         # Generate data
-        X_n = np.random.multivariate_normal(mean_X[n], Sigma, samples_per_user[n])
-        X_n *= S
+        X_n = np.random.multivariate_normal(mean_X[n], np.diag(S), samples_per_user[n])
         X_total[indices_per_user[n]:indices_per_user[n+1], :] = X_n
 
     # Normalize all X's using LAMBDA
     norm = np.sqrt(np.linalg.norm(X_total.T.dot(X_total), 2) / num_total_samples)
     X_total /= norm
+
+    covarient_matrix = np.cov(X_total)
+    print("Covarient matrix:",covarient_matrix)
 
     # Generate weights and labels
     W = np.random.rand(dim)
