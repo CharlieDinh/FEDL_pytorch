@@ -4,7 +4,11 @@ import json
 import random
 import os
 np.random.seed(0)
-from numpy import linalg as LA
+
+NUM_USER = 100
+Kappa = 10
+Dim = 40 
+Noise = 0.05
 
 def generate_x(n_samples = 100, dim= 40, kappa= 10):
     '''Helper function to generate data''' 
@@ -90,13 +94,13 @@ def save_total_data():
         if not os.path.exists(path):
             os.makedirs(path)
 
-    X, y = generate_linear_data(100, 2, 40, 0.05)
+    X, y = generate_linear_data(NUM_USER, Kappa, Dim, Noise)
 
     # Create data structure
     train_data = {'users': [], 'user_data': {}, 'num_samples': []}
     test_data = {'users': [], 'user_data': {}, 'num_samples': []}
 
-    for i in range(100):
+    for i in range(NUM_USER):
         uname = 'f_{0:05d}'.format(i)
         combined = list(zip(X[i], y[i]))
         random.shuffle(combined)
