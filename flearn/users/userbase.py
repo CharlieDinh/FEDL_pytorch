@@ -19,6 +19,8 @@ class User:
         self.test_samples = len(test_data)
         if(batch_size == 0):
             self.batch_size = len(train_data)
+        else:
+            self.batch_size = batch_size
         self.learning_rate = learning_rate
         self.hyper_learning_rate = hyper_learning_rate
         self.L = L
