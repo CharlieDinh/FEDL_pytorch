@@ -58,21 +58,64 @@ def finding_optimal_synthetic(num_users=100, kappa=10, dim = 40, noise_ratio=0.0
     y_total = X_total.dot(W)
     noise_variance = 0.01
     y_total = y_total + np.sqrt(noise_ratio) * np.random.randn(num_total_samples)
+    
+    for n in range(num_users):
+        X_n = X_total[indices_per_user[n]:indices_per_user[n+1],:]
+        y_n = y_total[indices_per_user[n]:indices_per_user[n+1]]
+        X_split[n] = X_n.tolist()
+        y_split[n] = y_n.tolist()
+    
+    #split data to get training data 
+    train_x = []
+    train_y = []
+    test_x = []
+    test_y = []
+    for i in range(NUM_USER):
+        num_samples = len(X_split[i])
+        train_len = int(0.75 * num_samples)
+        test_len = num_samples - train_len
+        train_x.append(X_split[i][:train_len])
+        train_y.append(y_split[i][:train_len])
+        test_x.append(X_split[i][train_len:])
+        test_y.append(y_split[i][train_len:])
 
+    train_xc = np.concatenate(train_x)
+    train_yc = np.concatenate(train_y)
+    test_xc = np.concatenate(test_x)
+    test_yc = np.concatenate(test_y)
+    
+    # # finding optimal
+    X_X_T = np.zeros(shape=(dim+1,dim+1))
+    X_Y = np.zeros(shape=(dim+1,1))
 
-    # finding optimal
-    model = LinearRegression()
-    model.fit(X_total, y_total)
-    out = model.predict(X_total)
-    LOSS = sk.metrics.mean_squared_error(out,y_total)
-    return LOSS , model.coef_, model.intercept_
+    for n in range(num_users):
+        X = np.array(train_x[i])
+        y = np.array(train_y[i])
+        one = np.ones((X.shape[0], 1))
+        Xbar = np.concatenate((one, X), axis = 1)
+
+        X_X_T += Xbar.T.dot(Xbar)*len(y)/len(train_yc)
+        X_Y += np.array(Xbar).T.dot(y).reshape((dim+1, 1))*len(y)/len(train_yc)
+    
+    # get optimal point.
+    loss = 0
+    w = np.linalg.inv(X_X_T).dot(X_Y)
+
+    # caculate loss over all devices
+    for n in range(num_users):
+        X = np.array(train_x[i])
+        y = np.array(train_y[i])
+        one = np.ones((X.shape[0], 1))
+        Xbar = np.concatenate((one, X), axis = 1)
+        y_preditc = Xbar.dot(w)
+        loss += sk.metrics.mean_squared_error(y,y_preditc)*len(y)/len(train_yc)
+
+    return loss
 
 def main():
     loss = 0
-    loss, w, b = finding_optimal_synthetic()
-    print("loss for all data", loss)
-    print("w",w)
-    print("b",b)
+    loss = finding_optimal_synthetic()
+    print("loss for train data", loss)
 
 if __name__ == "__main__":
     main()
