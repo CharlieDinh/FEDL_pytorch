@@ -6,7 +6,7 @@ import os
 np.random.seed(0)
 
 NUM_USER = 100
-Kappa = 10
+Kappa = 1.4
 Dim = 40 
 Noise = 0.05
 

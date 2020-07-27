@@ -21,6 +21,13 @@ class UserFEDL(User):
             self.loss = nn.NLLLoss()
 
         self.optimizer  = FEDLOptimizer(self.model.parameters(), lr=self.learning_rate, hyper_lr= hyper_learning_rate, L = L)
+    
+    def get_full_grad(self):
+        for X, y in self.trainloaderfull:
+            self.model.zero_grad()
+            output = self.model(X)
+            loss = self.loss(output, y)
+            loss.backward()
 
     def set_grads(self, new_grads):
         if isinstance(new_grads, nn.Parameter):
@@ -42,5 +49,8 @@ class UserFEDL(User):
                 loss = self.loss(output, y)
                 loss.backward()
                 self.optimizer.step(self.server_grad, self.pre_local_grad)
+
+        self.optimizer.zero_grad()
+        self.get_full_grad()
         return loss
 
