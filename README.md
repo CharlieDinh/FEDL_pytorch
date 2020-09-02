@@ -18,10 +18,11 @@ https://arxiv.org/abs/1910.13067
 
 # Dataset: We use 3 datasets: MNIST, FENIST, and Synthetic
 
-- To generate non-idd MNIST Data: 
-- To generate FENIST Data: 
-- To generate niid Synthetic:
-- The datasets are available to download at:
+- To generate non-idd MNIST Data: In folder data/mnist,  run: "python3 generate_niid_mnist_100users.py" 
+- To generate FEMNIST Data: first In folder data/nist run preprocess.sh to obtain all raw data, or can be download in the link below, then run  python3 generate_niid_femnist_100users.py
+- To generate niid Linear Synthetic: In folder data/linear_synthetic, run: "python3 generate_linear_regession.py" 
+- The datasets are available to download at: https://drive.google.com/drive/folders/1Q91NCGcpHQjB3bXJTvtx5qZ-TrIZ9WzT?usp=sharing
+
 
 # Produce figures in the paper:
-- There are 3 main files to produce the figures and results corresponding for 3 datasets.
+- There is a main file "main.py" which allows running all experiments and 3 files "main_mnist.py, main_nist.py, main_linear.py" to produce the figures corresponding for 3 datasets. It is noted that each experiment is run at least 10 times and then the result is averaged.
