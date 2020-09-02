@@ -10,7 +10,7 @@ Link:
 https://arxiv.org/abs/1910.13067
 
 # Software requirements:
-- numpy, scipy, tensorflow, Pillow, matplotlib.
+- numpy, scipy, pytorch, Pillow, matplotlib.
 
 - To download the dependencies: **pip3 install -r requirements.txt**
 
