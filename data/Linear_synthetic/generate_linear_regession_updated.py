@@ -41,16 +41,18 @@ def generate_linear_data(num_users=100, kappa=10, dim=40, noise_ratio=0.05):
     num_total_samples = indices_per_user[-1]
 
     # Create mean of data for each user, each user will have different distribution
-    mean_X = np.array([np.random.randn(dim) for _ in range(num_users)])
-    sigma_range = 10
-    sig = np.random.uniform(0, sigma_range)
+    sig = np.random.uniform(0.1, 10)
+    mean = np.random.uniform(low=-0.1, high=0.1)
+    cov = np.random.uniform(low=0.0, high=0.01)
+    #print("mean -cov", mean,cov)
+    mean_X = np.random.normal(mean, cov, dim)
 
     X_total = np.zeros((num_total_samples, dim))
     y_total = np.zeros(num_total_samples)
 
     for n in range(num_users):
         # Generate data
-        X_n = np.random.multivariate_normal([0]*dim, sig * np.diag(S), samples_per_user[n])
+        X_n = np.random.multivariate_normal(mean_X, sig * np.diag(S), samples_per_user[n])
         X_total[indices_per_user[n]:indices_per_user[n+1], :] = X_n
 
     # Normalize all X's using LAMBDA
