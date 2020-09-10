@@ -28,6 +28,10 @@ def main(dataset, algorithm, model, batch_size, learning_rate, hyper_learning_ra
 
         if(model == "linear_regression"):
             model = Linear_Regression(60,1), model
+        
+        if(model == "dnn"):
+            model = model = DNN(), model
+
         # select algorithm
         if(algorithm == "FedAvg"):
             server = FedAvg(dataset, algorithm, model, batch_size, learning_rate, hyper_learning_rate, L, num_glob_iters, local_epochs, optimizer, numusers, i)
@@ -43,11 +47,11 @@ def main(dataset, algorithm, model, batch_size, learning_rate, hyper_learning_ra
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", type=str, default="Mnist", choices=["Mnist","Fenist", "Linear_synthetic", "Logistic_synthetic"])
-    parser.add_argument("--model", type=str, default="mclr", choices=["linear_regression", "mclr", "cnn"])
+    parser.add_argument("--model", type=str, default="mclr", choices=["linear_regression", "mclr", "dnn"])
     parser.add_argument("--batch_size", type=int, default=20)
     parser.add_argument("--learning_rate", type=float, default=0.003, help="Local learning rate")
     parser.add_argument("--hyper_learning_rate", type=float, default=1, help=" Learning rate of FEDL")
-    parser.add_argument("--L", type=int, default=15, help="Regularization term")
+    parser.add_argument("--L", type=int, default=0, help="Regularization term")
     parser.add_argument("--num_global_iters", type=int, default=800)
     parser.add_argument("--local_epochs", type=int, default=20)
     parser.add_argument("--optimizer", type=str, default="SGD")
