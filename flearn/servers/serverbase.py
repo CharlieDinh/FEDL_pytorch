@@ -83,7 +83,7 @@ class Server:
 
         num_users = min(num_users, len(self.users))
         # fix the list of user consistent
-        np.random.seed(round)
+        np.random.seed(round * (self.times + 1))
         return np.random.choice(self.users, num_users, replace=False) #, p=pk)
 
             
