@@ -104,7 +104,8 @@ Updated version: https://github.com/CharlieDinh/FEDL/files/5205902/FEDL_journal_
   - To produce the figure for FEMNIST experiment, run <pre><code> python3 plot_femnist.py</code></pre>
 
 - For non-convex experiment on (MNIST dataset):
+  Note that FEDL is unstable with minibatch for example 20:
    <pre><code>
-    python3 -u main.py --dataset Mnist --algorithm FEDL --model dnn --num_global_iters  800 --clients_per_round 10 --batch_size 20 --local_epochs  20 --learning_rate  0.0015 --hyper_learning_rate  0.8 --rho 0 --times 10
+    python3 -u main.py --dataset Mnist --algorithm FEDL --model dnn --num_global_iters  800 --clients_per_round 10 --batch_size 40 --local_epochs  20 --learning_rate  0.0015 --hyper_learning_rate  0.8 --rho 0 --times 10
     python3 -u main.py --dataset Mnist --algorithm FEDL --model dnn --num_global_iters  800 --clients_per_round 10 --batch_size 0 --local_epochs  20 --learning_rate  0.0015 --hyper_learning_rate  4.0 --rho 0 --times 10
   </code></pre>
