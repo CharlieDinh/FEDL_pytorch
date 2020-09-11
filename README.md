@@ -43,15 +43,15 @@ Updated version: https://github.com/CharlieDinh/FEDL/files/5205902/FEDL_journal_
     python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.05 --rho 1.4 --times  1
     python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.07 --rho 1.4 --times  1 
 
-    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.1 --rho 2 --times  1
-    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.3 --rho 2 --times  1 
-    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.5 --rho 2 --times  1
-    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.7 --rho 2 --times  1 
+    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.01 --rho 2 --times  1
+    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.03 --rho 2 --times  1 
+    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.05 --rho 2 --times  1
+    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.07 --rho 2 --times  1 
 
-    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.1 --rho 5 --times  1
-    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.3 --rho 5 --times  1 
-    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.5 --rho 5 --times  1
-    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.7 --rho 5 --times  1 
+    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.01 --rho 5 --times  1
+    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.03 --rho 5 --times  1 
+    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.05 --rho 5 --times  1
+    python3 -u main.py --dataset Linear_synthetic --algorithm FEDL --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.07 --rho 5 --times  1 
     </code></pre>
   - All the train loss, testing accuracy, and training accuracy will be stored as h5py file in the folder "results".
   - To produce the figure for linear regression run <pre><code> python3 plot_linear.py</code></pre>
