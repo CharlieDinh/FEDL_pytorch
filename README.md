@@ -6,10 +6,9 @@ This repository is for the Experiment Section of the paper:
 Authors:
 Canh T. Dinh, Nguyen H. Tran, Minh N. H. Nguyen, Choong Seon Hong, Wei Bao, Albert Zomaya, Vincent Gramoli
 
-Link:
-https://arxiv.org/abs/1910.13067
+Paper Link: https://arxiv.org/abs/1910.13067 and updated version: https://github.com/CharlieDinh/FEDL/files/5205902/FEDL_journal_updated.pdf
 
-Updated version: https://github.com/CharlieDinh/FEDL/files/5205902/FEDL_journal_updated.pdf
+Source Code (Tensoflow version): https://github.com/CharlieDinh/FEDL
 
 # Software requirements:
 - numpy, scipy, pytorch, Pillow, matplotlib.
@@ -60,7 +59,7 @@ Updated version: https://github.com/CharlieDinh/FEDL/files/5205902/FEDL_journal_
 - For MNIST, run below commands:
     <pre><code>
     python3 -u main.py --dataset Mnist --algorithm FEDL --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 20 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10
-    python3 -u main.py --dataset mnist --algorithm FedAvg --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 20 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
+    python3 -u main.py --dataset Mnist --algorithm FedAvg --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 20 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
 
     python3 -u main.py --dataset Mnist --algorithm FEDL --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 40 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10
     python3 -u main.py --dataset Mnist --algorithm FedAvg --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 40 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
