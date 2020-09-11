@@ -90,9 +90,14 @@ class Server:
     # Save loss, accurancy to h5 fiel
     def save_results(self):
         alg = self.dataset + "_" + self.algorithm
-        alg = alg + "_" + str(self.learning_rate) + "_" + str(self.hyper_learning_rate) + "_" + str(self.L) + "_" + str(self.num_users) + "u" + "_" + str(self.batch_size) + "b" + "_" + str(self.local_epochs)
+        alg = alg + "_" + str(self.learning_rate) + "_" + str(self.hyper_learning_rate) + "_" + str(self.num_users) + "u" + "_" + str(self.batch_size) + "b" + "_" + str(self.local_epochs)
+        
+        if(self.L > 0):
+            alg = alg + "_" + str(self.L) + "L"
+
         if(self.rho > 0):
             alg = alg + "_" + str(self.rho) + "p"
+        
         alg = alg + "_" + str(self.times)
         if (len(self.rs_glob_acc) != 0 &  len(self.rs_train_acc) & len(self.rs_train_loss)) :
             with h5py.File("./results/" + '{}.h5'.format(alg, self.local_epochs), 'w') as hf:

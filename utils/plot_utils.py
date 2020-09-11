@@ -24,16 +24,16 @@ def get_training_data_value(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=[
 
         string_learning_rate = str(learning_rate[i])
         
-        if(algorithms_list[i] == "fedfedl"):
+        if(algorithms_list[i] == "FEDL"):
             string_learning_rate = string_learning_rate + "_" +str(hyper_learning_rate[i])
         algorithms_list[i] = algorithms_list[i] + \
             "_" + string_learning_rate + "_" + str(num_users) + \
             "u" + "_" + str(batch_size[i]) + "b"
         if(rho[i] > 0):
-            algorithms_list[i] += "_" + str(rho[i])+"r"
+            algorithms_list[i] += "_" + str(rho[i])+"p"
 
         train_acc[i, :], train_loss[i, :], glob_acc[i, :] = np.array(
-            simple_read_data(str(loc_ep1[i]) + "_avg", dataset + algorithms_list[i]))[:, :Numb_Glob_Iters]
+            simple_read_data(str(loc_ep1[i]) + "_avg", dataset + "_" + algorithms_list[i]))[:, :Numb_Glob_Iters]
         algs_lbl[i] = algs_lbl[i]
     return glob_acc, train_acc, train_loss
 
@@ -436,7 +436,7 @@ def plot_summary_linear(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=[], l
     plt.savefig(dataset + str(loc_ep1[1]) + 'train_loss.pdf', bbox_inches='tight')
     plt.savefig(dataset + str(loc_ep1[1]) + 'train_loss.png', bbox_inches='tight')
 
-def get_all_training_data_value(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb = 0, learning_rate=0, hyper_learning_rate=0, algorithms="", batch_size=0, dataset="", rho= 0,times = 5):
+def get_all_training_data_value(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb = 0, learning_rate=0, hyper_learning_rate=0, algorithms="", batch_size=0, dataset="", rho= 0, times = 5):
     train_acc = np.zeros((times, Numb_Glob_Iters))
     train_loss = np.zeros((times, Numb_Glob_Iters))
     glob_acc = np.zeros((times, Numb_Glob_Iters))
@@ -448,15 +448,16 @@ def get_all_training_data_value(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, la
 
         string_learning_rate = str(learning_rate)
         
-        if(algorithms_list[i] == "fedfedl"):
+        if(algorithms_list[i] == "FEDL"):
             string_learning_rate = string_learning_rate + "_" +str(hyper_learning_rate)
 
-        algorithms_list[i] = algorithms_list[i] + "_" + string_learning_rate + "_" + str(num_users) + "u" + "_" + str(batch_size) + "b"
+        algorithms_list[i] = algorithms_list[i] + "_" + string_learning_rate + "_" + str(num_users) + "u" + "_" + str(batch_size) + "b" +  "_" + str(loc_ep1)
+        
         if(rho > 0):
-            algorithms_list[i] += "_" + str(rho[i]) + "r"
+            algorithms_list[i] += "_" + str(rho) + "p"
 
         train_acc[i, :], train_loss[i, :], glob_acc[i, :] = np.array(
-            simple_read_data(str(loc_ep1) + "_" + str(i) , dataset + algorithms_list[i]))[:, :Numb_Glob_Iters]
+            simple_read_data(str(i) , dataset + "_" + algorithms_list[i]))[:, :Numb_Glob_Iters]
 
     return glob_acc, train_acc, train_loss
 
@@ -474,18 +475,19 @@ def average_data(num_users, loc_ep1, Numb_Glob_Iters, lamb,learning_rate, hyper_
     print("std:", np.std(max_accurancy))
     print("Mean:", np.mean(max_accurancy))
 
-    alg = dataset + algorithms
+    alg = dataset + "_" + algorithms
     alg += "_" + str(learning_rate)
     
-    if(algorithms == "fedfedl"):
+    if(algorithms == "FEDL"):
         alg += "_" + str(hyper_learning_rate)
-    if(lamb > 0):
-        alg += "_" + str(lamb) 
-        
+    
     alg += "_" + str(num_users) + "u" + "_" + str(batch_size) + "b" + "_" + str(loc_ep1)
 
+    if(lamb > 0):
+        alg += "_" + str(lamb) + "L" 
+        
     if(rho > 0):
-        alg += alg + "_" + "rho"
+        alg += "_" + str(rho) + "p"
     
     #alg = alg + "_" + str(learning_rate) + "_" + str(hyper_learning_rate) + "_" + str(lamb) + "_" + str(num_users) + "u" + "_" + str(batch_size) + "b" + "_" + str(loc_ep1)
     alg = alg + "_" + "avg"
