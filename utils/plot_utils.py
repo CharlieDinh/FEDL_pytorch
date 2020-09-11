@@ -28,12 +28,12 @@ def get_training_data_value(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=[
             string_learning_rate = string_learning_rate + "_" +str(hyper_learning_rate[i])
         algorithms_list[i] = algorithms_list[i] + \
             "_" + string_learning_rate + "_" + str(num_users) + \
-            "u" + "_" + str(batch_size[i]) + "b"
+            "u" + "_" + str(batch_size[i]) + "b" + "_" + str(loc_ep1[i])
         if(rho[i] > 0):
             algorithms_list[i] += "_" + str(rho[i])+"p"
 
         train_acc[i, :], train_loss[i, :], glob_acc[i, :] = np.array(
-            simple_read_data(str(loc_ep1[i]) + "_avg", dataset + "_" + algorithms_list[i]))[:, :Numb_Glob_Iters]
+            simple_read_data("avg", dataset + "_" + algorithms_list[i]))[:, :Numb_Glob_Iters]
         algs_lbl[i] = algs_lbl[i]
     return glob_acc, train_acc, train_loss
 
