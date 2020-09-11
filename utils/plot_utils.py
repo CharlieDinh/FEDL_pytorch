@@ -350,7 +350,7 @@ def plot_summary_nist(num_users=100, loc_ep1=[], Numb_Glob_Iters=10, lamb=[], le
         ax1.plot(glob_acc[i, 1:], linestyle=linestyles[i],
                  label=algs_lbl[i] + " : " + '$B = $' + stringbatch + ', $\eta = $' + str(hyper_learning_rate[i]) + ', $K_l = $' + str(loc_ep1[i]))
         ax1.set_ylim([min, max])
-        ax1.legend(loc='lower right')
+        ax1.legend(loc='lower right', prop={'size': 10})
 
     for i in range(num_al):
         stringbatch = str(batch_size[i+num_al])
@@ -359,7 +359,7 @@ def plot_summary_nist(num_users=100, loc_ep1=[], Numb_Glob_Iters=10, lamb=[], le
         ax2.plot(glob_acc[i+num_al, 1:], linestyle=linestyles[i],
                  label=algs_lbl[i + num_al] + " : " + '$B = $' + stringbatch + ', $\eta = $' + str(hyper_learning_rate[i+num_al*1]) + ', $K_l = $' + str(loc_ep1[i + num_al]))
         ax2.set_ylim([min, max])
-        ax2.legend(loc='lower right')
+        ax2.legend(loc='lower right', prop={'size': 10})
 
     for i in range(num_al):
         stringbatch = str(batch_size[i+num_al*2])
@@ -368,7 +368,7 @@ def plot_summary_nist(num_users=100, loc_ep1=[], Numb_Glob_Iters=10, lamb=[], le
         ax3.plot(glob_acc[i+num_al*2, 1:], linestyle=linestyles[i],
                  label=algs_lbl[i + num_al*2] + " : " + '$B = $' + stringbatch + ', $\eta = $' + str(hyper_learning_rate[i+num_al*2]) + ', $K_l = $' + str(loc_ep1[i+ 2*num_al]))
         ax3.set_ylim([min, max])
-        ax3.legend(loc='lower right')
+        ax3.legend(loc='lower right', prop={'size': 10})
 
     ax.set_title('FEMNIST', y=1.02)
     ax.set_xlabel('Global rounds ' + '$K_g$')
