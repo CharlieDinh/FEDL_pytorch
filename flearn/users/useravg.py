@@ -14,7 +14,7 @@ class UserAVG(User):
         super().__init__(numeric_id, train_data, test_data, model[0], batch_size, learning_rate, hyper_learning_rate, L,
                          local_epochs)
 
-        if(model[1] == "linear_regression"):
+        if(model[1] == "linear"):
             self.loss = nn.MSELoss()
         else:
             self.loss = nn.NLLLoss()

@@ -36,20 +36,20 @@ https://arxiv.org/abs/1910.13067
   - To find the optimal solution: In folder data/linear_synthetic, run python3 optimal_solution_finding_update.py (also the value of $\rho$ need to be configured to find the optimal solution)
   - To generate result for the training process, run below commands:
     <pre><code>
-    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.01 --rho 1.4 --times  1
-    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.03 --rho 1.4 --times  1
-    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.05 --rho 1.4 --times  1
-    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.07 --rho 1.4 --times  1 
+    python3 -u main.py --dataset Linear_synthetic --optimizer fedfedl --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.01 --rho 1.4 --times  1
+    python3 -u main.py --dataset Linear_synthetic --optimizer fedfedl --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.03 --rho 1.4 --times  1
+    python3 -u main.py --dataset Linear_synthetic --optimizer fedfedl --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.05 --rho 1.4 --times  1
+    python3 -u main.py --dataset Linear_synthetic --optimizer fedfedl --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.07 --rho 1.4 --times  1 
 
-    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.1 --rho 2 --times  1
-    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.3 --rho 2 --times  1 
-    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.5 --rho 2 --times  1
-    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.7 --rho 2 --times  1 
+    python3 -u main.py --dataset Linear_synthetic --optimizer fedfedl --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.1 --rho 2 --times  1
+    python3 -u main.py --dataset Linear_synthetic --optimizer fedfedl --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.3 --rho 2 --times  1 
+    python3 -u main.py --dataset Linear_synthetic --optimizer fedfedl --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.5 --rho 2 --times  1
+    python3 -u main.py --dataset Linear_synthetic --optimizer fedfedl --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.7 --rho 2 --times  1 
 
-    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.1 --rho 5 --times  1
-    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.3 --rho 5 --times  1 
-    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.5 --rho 5 --times  1
-    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.7 --rho 5 --times  1 
+    python3 -u main.py --dataset Linear_synthetic --optimizer fedfedl --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.1 --rho 5 --times  1
+    python3 -u main.py --dataset Linear_synthetic --optimizer fedfedl --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.3 --rho 5 --times  1 
+    python3 -u main.py --dataset Linear_synthetic --optimizer fedfedl --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.5 --rho 5 --times  1
+    python3 -u main.py --dataset Linear_synthetic --optimizer fedfedl --model linear --num_global_iters  200 --clients_per_round 100 --batch_size 0 --local_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.7 --rho 5 --times  1 
     </code></pre>
   - All the train loss, testing accuracy, and training accuracy will be stored as h5py file in the folder "results".
   - To produce the figure for linear regression run <pre><code> python3 main_linear.py</code></pre>
@@ -57,17 +57,17 @@ https://arxiv.org/abs/1910.13067
   
 - For MNIST, run below commands:
     <pre><code>
-    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10
-    python3 -u main.py --dataset mnist --optimizer fedsgd --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
+    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 20 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10
+    python3 -u main.py --dataset mnist --optimizer fedsgd --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 20 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
 
-    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 40 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10
-    python3 -u main.py --dataset mnist --optimizer fedsgd --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 40 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
+    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 40 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10
+    python3 -u main.py --dataset mnist --optimizer fedsgd --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 40 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
 
-    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 0 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10
-    python3 -u main.py --dataset mnist --optimizer fedsgd --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 0 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
+    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 0 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10
+    python3 -u main.py --dataset mnist --optimizer fedsgd --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 0 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
 
-    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 0 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  2 --rho 0 --times  10
-    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 0 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  4 --rho 0 --times  10
+    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 0 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  2 --rho 0 --times  10
+    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 0 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  4 --rho 0 --times  10
     </code></pre>
     
 <p align="center">
@@ -80,17 +80,17 @@ https://arxiv.org/abs/1910.13067
   
 - For FEMNIST, run below commands:
     <pre><code>
-    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  10 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10 
-    python3 -u main.py --dataset nist --optimizer fedsgd --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  10 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
-    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 0 --num_epochs  10 --learning_rate  0.015 --hyper_learning_rate  0.5 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 20 --local_epochs  10 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedsgd --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 20 --local_epochs  10 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 0 --local_epochs  10 --learning_rate  0.015 --hyper_learning_rate  0.5 --rho 0 --times  10 
 
-    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10 
-    python3 -u main.py --dataset nist --optimizer fedsgd --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
-    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 0 --num_epochs  20 --learning_rate  0.015 --hyper_learning_rate  0.5 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 20 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedsgd --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 20 --local_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 0 --local_epochs  20 --learning_rate  0.015 --hyper_learning_rate  0.5 --rho 0 --times  10 
 
-    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  40 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10 
-    python3 -u main.py --dataset nist --optimizer fedsgd --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  40 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
-    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 0 --num_epochs  40 --learning_rate  0.015 --hyper_learning_rate  0.5 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 20 --local_epochs  40 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedsgd --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 20 --local_epochs  40 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr --num_global_iters  800 --clients_per_round 10 --batch_size 0 --local_epochs  40 --learning_rate  0.015 --hyper_learning_rate  0.5 --rho 0 --times  10 
     </code></pre>
     
 <p align="center">
