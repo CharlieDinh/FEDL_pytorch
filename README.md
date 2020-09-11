@@ -26,3 +26,77 @@ https://arxiv.org/abs/1910.13067
 
 # Produce figures in the paper:
 - There is a main file "main.py" which allows running all experiments and 3 files "main_mnist.py, main_nist.py, main_linear.py" to produce the figures corresponding for 3 datasets. It is noted that each experiment is run at least 10 times and then the result is averaged.
+
+- To produce the experiments for Linear Regresstion:
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/44039773/87938445-f546e700-cad9-11ea-8138-a0b6f5e68419.png" height="300">
+</p>
+
+  - In folder data/linear_synthetic, before generating linear data set, configure the value of $\rho$ for example rho = 1.4 (in the papers we use 3 different values of $\rho$: 1.4, 2, 5) then run: "python3 generate_linear_regession_update.py" to generate data corresponding to different values of $\rho$.
+  - To find the optimal solution: In folder data/linear_synthetic, run python3 optimal_solution_finding_update.py (also the value of $\rho$ need to be configured to find the optimal solution)
+  - To generate result for the training process, run below commands:
+    <pre><code>
+    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.01 --rho 1.4 --times  1
+    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.03 --rho 1.4 --times  1
+    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.05 --rho 1.4 --times  1
+    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.04 --hyper_learning_rate  0.07 --rho 1.4 --times  1 
+
+    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.1 --rho 2 --times  1
+    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.3 --rho 2 --times  1 
+    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.5 --rho 2 --times  1
+    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.7 --rho 2 --times  1 
+
+    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.1 --rho 5 --times  1
+    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.3 --rho 5 --times  1 
+    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.5 --rho 5 --times  1
+    python3 -u main.py --dataset linear_synthetic --optimizer fedfedl --model linear.py --num_rounds  200 --clients_per_round 100 --batch_size 0 --num_epochs  20 --learning_rate  0.01 --hyper_learning_rate  0.7 --rho 5 --times  1 
+    </code></pre>
+  - All the train loss, testing accuracy, and training accuracy will be stored as h5py file in the folder "results".
+  - To produce the figure for linear regression run <pre><code> python3 main_linear.py</code></pre>
+  - Note that all users are selected in Synthetic data, so the experiments for each case of synthetic only need to be run once
+  
+- For MNIST, run below commands:
+    <pre><code>
+    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10
+    python3 -u main.py --dataset mnist --optimizer fedsgd --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
+
+    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 40 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10
+    python3 -u main.py --dataset mnist --optimizer fedsgd --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 40 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
+
+    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 0 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10
+    python3 -u main.py --dataset mnist --optimizer fedsgd --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 0 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
+
+    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 0 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  2 --rho 0 --times  10
+    python3 -u main.py --dataset mnist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 0 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  4 --rho 0 --times  10
+    </code></pre>
+    
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/44039773/87938456-f8da6e00-cad9-11ea-8ed2-9dbf8f5d245d.png" height="300">
+  
+  <img src="https://user-images.githubusercontent.com/44039773/87938464-fa0b9b00-cad9-11ea-9a5f-b68e52b4f13d.png" height="300">
+</p>
+
+  - To produce the figure for MNIST experiment, run <pre><code> python3 main_mn.py</code></pre>
+  
+- For FEMNIST, run below commands:
+    <pre><code>
+    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  10 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedsgd --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  10 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 0 --num_epochs  10 --learning_rate  0.015 --hyper_learning_rate  0.5 --rho 0 --times  10 
+
+    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedsgd --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  20 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 0 --num_epochs  20 --learning_rate  0.015 --hyper_learning_rate  0.5 --rho 0 --times  10 
+
+    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  40 --learning_rate  0.003 --hyper_learning_rate  0.2 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedsgd --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 20 --num_epochs  40 --learning_rate  0.003 --hyper_learning_rate  0 --rho 0 --times  10 
+    python3 -u main.py --dataset nist --optimizer fedfedl --model mclr.py --num_rounds  800 --clients_per_round 10 --batch_size 0 --num_epochs  40 --learning_rate  0.015 --hyper_learning_rate  0.5 --rho 0 --times  10 
+    </code></pre>
+    
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/44039773/87938469-fb3cc800-cad9-11ea-9af5-11f91ba14e5b.png" height="300">
+  
+  <img src="https://user-images.githubusercontent.com/44039773/87938476-fd068b80-cad9-11ea-95cb-72f075ab1471.png" height="300">
+</p>
+
+  - To produce the figure for FEMNIST experiment, run <pre><code> python3 main_nist.py</code></pre>
