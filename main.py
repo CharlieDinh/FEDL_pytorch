@@ -43,7 +43,7 @@ def main(dataset, algorithm, model, batch_size, learning_rate, hyper_learning_ra
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", type=str, default="Mnist", choices=["Mnist","Femnist", "Linear_synthetic", "Logistic_synthetic"])
+    parser.add_argument("--dataset", type=str, default="Mnist", choices=["Mnist", "Femnist", "Linear_synthetic", "Logistic_synthetic"])
     parser.add_argument("--model", type=str, default="mclr", choices=["linear", "mclr", "dnn"])
     parser.add_argument("--batch_size", type=int, default=20)
     parser.add_argument("--learning_rate", type=float, default=0.003, help="Local learning rate")
