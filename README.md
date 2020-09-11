@@ -9,6 +9,8 @@ Canh T. Dinh, Nguyen H. Tran, Minh N. H. Nguyen, Choong Seon Hong, Wei Bao, Albe
 Link:
 https://arxiv.org/abs/1910.13067
 
+Updated version: https://github.com/CharlieDinh/FEDL/files/5205902/FEDL_journal_updated.pdf
+
 # Software requirements:
 - numpy, scipy, pytorch, Pillow, matplotlib.
 
@@ -76,7 +78,7 @@ https://arxiv.org/abs/1910.13067
   <img src="https://user-images.githubusercontent.com/44039773/87938464-fa0b9b00-cad9-11ea-9a5f-b68e52b4f13d.png" height="300">
 </p>
 
-  - To produce the figure for MNIST experiment, run <pre><code> python3 main_mn.py</code></pre>
+  - To produce the figure for MNIST experiment, run <pre><code> python3 plot_mnist.py</code></pre>
   
 - For FEMNIST, run below commands:
     <pre><code>
@@ -99,4 +101,10 @@ https://arxiv.org/abs/1910.13067
   <img src="https://user-images.githubusercontent.com/44039773/87938476-fd068b80-cad9-11ea-95cb-72f075ab1471.png" height="300">
 </p>
 
-  - To produce the figure for FEMNIST experiment, run <pre><code> python3 main_nist.py</code></pre>
+  - To produce the figure for FEMNIST experiment, run <pre><code> python3 plot_femnist.py</code></pre>
+
+- For non-convex experiment on (MNIST dataset):
+   <pre><code>
+    python3 -u main.py --dataset Mnist --algorithm FEDL --model dnn --num_global_iters  800 --clients_per_round 10 --batch_size 20 --local_epochs  20 --learning_rate  0.0015 --hyper_learning_rate  0.8 --rho 0 --times 10
+    python3 -u main.py --dataset Mnist --algorithm FEDL --model dnn --num_global_iters  800 --clients_per_round 10 --batch_size 0 --local_epochs  20 --learning_rate  0.0015 --hyper_learning_rate  4.0 --rho 0 --times 10
+  </code></pre>
