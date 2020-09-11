@@ -20,16 +20,13 @@ def main(dataset, algorithm, model, batch_size, learning_rate, hyper_learning_ra
         print("---------------Running time:------------",i)
 
         # Generate model
-        if(model == "mclr"):
-            if(dataset == "Mnist"):
-                model = Mclr_Logistic(), model
-            elif( dataset == "Fenist"):
-                model = Mclr_Logistic(), model
+        if(model == "mclr"): #for Mnist and Femnist datasets
+            model = Mclr_Logistic(), model
 
-        if(model == "linear"):
+        if(model == "linear"): # For Linear dataset
             model = Linear_Regression(40,1), model
         
-        if(model == "dnn"):
+        if(model == "dnn"): # for Mnist and Femnist datasets
             model = model = DNN(), model
 
         # select algorithm
@@ -46,7 +43,7 @@ def main(dataset, algorithm, model, batch_size, learning_rate, hyper_learning_ra
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", type=str, default="Mnist", choices=["Mnist","Fenist", "Linear_synthetic", "Logistic_synthetic"])
+    parser.add_argument("--dataset", type=str, default="Mnist", choices=["Mnist","Femnist", "Linear_synthetic", "Logistic_synthetic"])
     parser.add_argument("--model", type=str, default="mclr", choices=["linear", "mclr", "dnn"])
     parser.add_argument("--batch_size", type=int, default=20)
     parser.add_argument("--learning_rate", type=float, default=0.003, help="Local learning rate")
