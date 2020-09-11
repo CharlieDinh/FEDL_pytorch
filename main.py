@@ -47,7 +47,7 @@ if __name__ == "__main__":
     parser.add_argument("--model", type=str, default="mclr", choices=["linear", "mclr", "dnn"])
     parser.add_argument("--batch_size", type=int, default=20)
     parser.add_argument("--learning_rate", type=float, default=0.003, help="Local learning rate")
-    parser.add_argument("--hyper_learning_rate", type=float, default=1, help=" Learning rate of FEDL")
+    parser.add_argument("--hyper_learning_rate", type=float, default = 0, help=" Learning rate of FEDL")
     parser.add_argument("--L", type=int, default=0, help="Regularization term")
     parser.add_argument("--num_global_iters", type=int, default=800)
     parser.add_argument("--local_epochs", type=int, default=20)

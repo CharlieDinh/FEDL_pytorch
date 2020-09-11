@@ -24,7 +24,7 @@ class FEDL(Server):
             self.total_train_samples += user.train_samples
             
         print("Number of users / total users:",num_users, " / " ,total_users)
-        print("Finished creating FedAvg server.")
+        print("Finished creating FEDL server.")
 
     def train(self):
         
